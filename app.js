@@ -1,20 +1,23 @@
-//events in node
-//a signal that something has happened
-//we need to respond to these events by reading and responding
+const http = require('http');
+const { endianness } = require('os');
 
-//EventEmitter is a class that contains the event
-const EventEmitter = require('events')
+// this server is also an event emitter
+// has .add .on .emit
+const server = http.createServer((req, res) => {
+  if(req.url ==='/') {
+    res.write('hello world');
+    res.end();
+  }
+  if (req.url === '/api/courses') {
+    res.write(JSON.stringify([1,2,3]))
+    res.end();
+  }
+});
 
-//now we access a class with require
-//this class now extends EventEmitter
-const Logger = require('./logger');
-//make a new instance of this object
-const logger = new Logger();
+server.on('connection', (socket) => {
+  console.log('new connection...');
+});
 
-// Register a listener
-// must be called before the emiter
-logger.on('messageLogged', (arg) => {
-  console.log('listener called', arg);
-})
+server.listen(3000);
 
-logger.log('message');
+console.log('Listening on port: 3000...');
