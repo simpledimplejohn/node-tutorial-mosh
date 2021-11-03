@@ -9,12 +9,14 @@ const emitter = new EventEmitter();
 
 // Register a listener
 // must be called before the emiter
-emitter.on('messageLogged', function(){
-  console.log('listener called');
+emitter.on('messageLogged', (arg) => {
+  console.log('listener called', arg);
 })
 
 
 //emit = make a noise or produce something
 //raise an event
-emitter.emit('messageLogged')
+// add an object with paramaters about the message
+emitter.emit('messageLogged', {id: 1, url: 'http://', data: 'message'});
 
+//raise: logging send (data: message)
