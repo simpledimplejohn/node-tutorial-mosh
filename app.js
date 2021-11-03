@@ -1,13 +1,20 @@
-//using the file system module
+//events in node
+//a signal that something has happened
+//we need to respond to these events by reading and responding
 
-const fs = require('fs');
+//EventEmitter is a class that contains the event
+const EventEmitter = require('events')
+//second one is now an object
+const emitter = new EventEmitter();
 
-// syncronously--do NOT do this
-// const files = fs.readdirSync('./');
-// console.log(files);
+// Register a listener
+// must be called before the emiter
+emitter.on('messageLogged', function(){
+  console.log('listener called');
+})
 
-//asyncronous calls a function with an error object or the file
-fs.readdir('./', function(err, files) {
-  if(err) console.log('Error', err);
-  else console.log('Result', files);
-});
+
+//emit = make a noise or produce something
+//raise an event
+emitter.emit('messageLogged')
+
